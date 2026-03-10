@@ -16,22 +16,32 @@ encoder = joblib.load("label_encoder_salary.pkl")
 
 st.title("Salary Prediction Model")
 
-Age = st.number_input("Enter your age",18,65)
-Gender = st.selectbox("Select your gender",encoder["Gender"].classes)
-education = st.selectbox("Select your education",encoder["Education Level"].classes)
-job_title = st.selectbox("Select your job title",encoder["Job Title"].classes)
-experience = st.number_input("Enter your experience(in years)",0,50)
+Age = st.number_input("Enter your age", 18, 65)
+
+Gender = st.selectbox("Select your gender",
+                      encoder["Gender"].classes_)
+
+education = st.selectbox("Select your education",
+                         encoder["Education Level"].classes_)
+
+job_title = st.selectbox("Select your job title",
+                         encoder["Job Title"].classes_)
+
+experience = st.number_input("Enter your experience (years)", 0, 50)
 
 df = pd.DataFrame({
-    "Enter your age":[Age],
-    "Select your Gender":[Gender],
-    "Select your educaton":[education],
-    "Select your JOb title":[job_title],
-    "Enter your experinece":[experience],
+    "Age": [Age],
+    "Gender": [Gender],
+    "Education Level": [education],
+    "Job Title": [job_title],
+    "Experience": [experience]
 })
 
-if st.button("predict salary"):
-  for col in encoder:
-    df[col]= encoder[col].transform(df[col])
-prediction = model.predict(df)
-st.success(f"predicted salary:{prediction[0]:}")
+if st.button("Predict Salary"):
+
+    for col in encoder:
+        df[col] = encoder[col].transform(df[col])
+
+    prediction = model.predict(df)
+
+    st.success(f"Predicted Salary: {prediction[0]}")
