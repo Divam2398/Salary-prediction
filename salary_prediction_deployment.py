@@ -3,9 +3,10 @@ import pandas as pd
 import joblib
 
 model = joblib.load('salary_prediction_rfr_model.pkl')
-encoder = joblib.load('label_encoder_Salary.pkl')
+encoder = joblib.load('label_encoder_salary.pkl')
 
 st.title('Salary Prediction model')
+
 
 age = st.number_input("Enter your age", 18, 65)
 gender = st.selectbox("Select your gender", encoder["Gender"].classes_)
